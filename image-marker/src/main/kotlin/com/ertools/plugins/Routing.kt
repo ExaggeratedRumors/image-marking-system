@@ -15,7 +15,7 @@ fun Application.configureRouting() {
             if(filename.isNullOrEmpty()) {
                 call.respond(HttpStatusCode.BadRequest, "Missing image name")
             } else {
-                val file = File(Constants.TEST_IMAGE_PATH)
+                val file = File("${Constants.IMAGES_PATH}/$filename")
                 if(file.exists()) call.respondFile(file)
                 else call.respond(HttpStatusCode.NotFound)
             }
