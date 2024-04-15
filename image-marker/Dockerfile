@@ -1,35 +1,7 @@
-# App Building phase --------
-FROM openjdk:8 AS build
-
-RUN mkdir /appbuild
-COPY . /appbuild
-
-WORKDIR /appbuild
-
-RUN ./gradlew clean build
-# End App Building phase --------
-
-# Container setup --------
-FROM openjdk:8-jre-alpine
-
-# Creating user
-ENV APPLICATION_USER 1033
-RUN adduser -D -g '' $APPLICATION_USER
-
-# Giving permissions
+FROM openjdk:17-jdk-alpine3.14
+ENV DB_URL jdbc:mysql://localhost:3306/mydatabase
+ENV DB_USER myuser
+ENV DB_PASSWORD mypassword
 RUN mkdir /app
-RUN mkdir /app/resources
-RUN chown -R $APPLICATION_USER /app
-RUN chmod -R 755 /app
-
-# Setting user to use when running the image 
-USER $APPLICATION_USER
-
-# Copying needed files
-COPY --from=build /appbuild/build/libs/image-marker*all.jar /app/image-marker.jar
-COPY --from=build /appbuild/resources/ /app/resources/
-WORKDIR /app
-
-# Entrypoint definition
-CMD ["sh", "-c", "java -server -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -XX:InitialRAMFraction=2 -XX:MinRAMFraction=2 -XX:MaxRAMFraction=2 -XX:+UseG1GC -XX:MaxGCPauseMillis=100 -XX:+UseStringDeduplication -jar image-marker.jar"]
-# End Container setup --------
+COPY ./build/libs/image-marker-all.jar /app/app.jar
+ENTRYPOINT ["java","-jar","/app/app.jar"]

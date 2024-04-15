@@ -1,0 +1,8 @@
+---
+user_entities:
+- id: 210014651176583169
+  name: "test1"
+  code: "BwUlCSlrT3W"
+- id: 555480718395047968
+  name: "test2"
+  code: "hlGYuMvnNcn"

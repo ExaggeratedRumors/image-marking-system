@@ -24,7 +24,7 @@ class ImageManager {
             val graphics = image.createGraphics()
             graphics.font = Font("Arial", Font.BOLD, 85)
             graphics.color = Color(255, 255, 255, 65)
-            val rows = Resources.configuration.keySize
+            val rows = Resources.keySize
             (0..rows).forEach {
                 graphics.drawString(code, 0, image.height * (it + 1) / rows)
                 graphics.drawString(code, image.width / 2, image.height * (it + 1) / rows)

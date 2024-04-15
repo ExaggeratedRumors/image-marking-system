@@ -53,7 +53,7 @@ class CodeManager {
     }
 
     fun addEntity(userId: Long, userName: String): String{
-        val key = generateKey(Resources.configuration.keyLength)
+        val key = generateKey(Resources.keyLength)
         Resources.keys.modify {
             this.add(UserEntity(userId, userName, key))
         }

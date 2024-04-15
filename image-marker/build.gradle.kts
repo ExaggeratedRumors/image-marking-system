@@ -3,6 +3,8 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 val ktor_version: String by project
 val kotlin_version: String by project
 val logback_version: String by project
+val mysql_connector_version: String by project
+val exposed_version: String by project
 
 plugins {
     kotlin("jvm") version "1.9.23"
@@ -14,7 +16,7 @@ group = "com.ertools"
 version = "0.0.1"
 
 application {
-    mainClass.set("com.ertools.ApplicationKt")
+    mainClass.set("io.ktor.server.netty.EngineMain")
 
     val isDevelopment: Boolean = project.ext.has("development")
     applicationDefaultJvmArgs = listOf("-Dio.ktor.development=$isDevelopment")
@@ -35,7 +37,15 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("com.fasterxml.jackson.core:jackson-databind")
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.14.2")
-    implementation("com.google.guava:guava:26.0-jre")
+    implementation("com.google.guava:guava:33.0.0-jre")
+
+    implementation("org.jetbrains.exposed:exposed-core:$exposed_version")
+    implementation("org.jetbrains.exposed:exposed-dao:$exposed_version")
+    implementation("org.jetbrains.exposed:exposed-jdbc:$exposed_version")
+    implementation("com.mysql:mysql-connector-j:$mysql_connector_version")
+
+    implementation("com.typesafe:config:1.4.1")
+
     testImplementation("io.ktor:ktor-server-tests-jvm")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
 }
@@ -48,6 +58,13 @@ tasks {
         manifest {
             attributes(mapOf("Main-Class" to "com.github.csolem.gradle.shadow.kotlin.example.App"))
         }
+    }
+}
+
+ktor {
+    docker {
+        localImageName.set("image-marker-image")
+        imageTag.set("alpha")
     }
 }
 

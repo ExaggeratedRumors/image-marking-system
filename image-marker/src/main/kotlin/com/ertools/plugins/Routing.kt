@@ -1,6 +1,7 @@
 package com.ertools.plugins
 
 import com.ertools.utils.Constants
+import com.ertools.utils.Resources
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.response.*
@@ -9,6 +10,16 @@ import java.io.File
 
 fun Application.configureRouting() {
     routing {
+        get("/") {
+            call.respond("This is image-marker server.")
+        }
+
+        get("/config") {
+            call.respond("Size: ${Resources.keySize}\n" +
+                    "Length: ${Resources.keyLength}\n" +
+                    "Opacity: ${Resources.keyOpacity}\n")
+        }
+
         get("/{image}") {
             val filename = call.parameters["image"]
             println("ENGINE REQUEST: $filename")
