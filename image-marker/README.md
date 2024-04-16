@@ -36,6 +36,20 @@ Route by:
 GET http://localhost:8081/{image}
 ```
 
+## Image
+
+Create image:
+```bash
+docker build -t image-marker-img .
+```
+
+## Container
+
+Create container:
+```bash
+docker run -p 8081:8081 --name image-marker image-marker-img
+```
+
 
 
 
