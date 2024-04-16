@@ -1,0 +1,7 @@
+version: '3'
+
+services:
+  image-marker:
+    image: image-marker-img
+    ports:
+      - 8081:8081
