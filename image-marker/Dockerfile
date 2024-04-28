@@ -1,4 +1,5 @@
 FROM openjdk:17-jdk-alpine3.14
+# ustawić tutaj utf i utc
 ENV DB_URL jdbc:mysql://localhost:3306/mydatabase
 ENV DB_USER myuser
 ENV DB_PASSWORD mypassword
