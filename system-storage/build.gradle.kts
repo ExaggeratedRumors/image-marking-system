@@ -8,7 +8,7 @@ plugins {
     kotlin("jvm") version "1.9.23"
     id("io.ktor.plugin") version "2.3.10"
     id("org.jetbrains.kotlin.plugin.serialization") version "1.9.23"
-    id("com.google.devtools.ksp") version "1.8.21-1.0.11"
+    id("com.google.devtools.ksp") version "1.9.22-1.0.17"
 }
 
 group = "com.ertools"
@@ -43,15 +43,11 @@ dependencies {
     /** Database **/
     implementation("org.mongodb:mongodb-driver-kotlin-coroutine:4.10.1")
 
-
-    /** Location **/
-    implementation("io.ktor:ktor-locations:$ktor_version")
-
     /** Authentication **/
     implementation("io.ktor:ktor-server-auth-jvm:$ktor_version")
 
     /** Koin **/
-    val koinVersion = "3.6.0"
+    val koinVersion = "3.3.2"
     implementation("io.insert-koin:koin-core:$koinVersion")
     testImplementation("io.insert-koin:koin-test:$koinVersion")
     testImplementation("io.insert-koin:koin-test-junit5:$koinVersion")
