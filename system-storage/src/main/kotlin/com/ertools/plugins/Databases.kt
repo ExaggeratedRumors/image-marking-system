@@ -20,25 +20,23 @@ import org.litote.kmongo.getCollection
 fun Application.configureDatabases() {
     install(Koin) {
         slf4jLogger()
-        startKoin {
-            modules(module {
-                single {
-                    val connectionString = Utils.DATABASE_URL
-                    val codecRegistry: CodecRegistry = CodecRegistries.fromRegistries(
-                        CodecRegistries.fromProviders(PojoCodecProvider.builder().automatic(true).build()),
-                        MongoClientSettings.getDefaultCodecRegistry()
-                    )
-                    val settings = MongoClientSettings.builder()
-                        .applyConnectionString(ConnectionString(connectionString))
-                        .codecRegistry(codecRegistry)
-                        .build()
-                    KMongo.createClient(settings).getDatabase(Utils.DATABASE_NAME)
-                }
-                single { get<com.mongodb.client.MongoDatabase>().getCollection<User>() }
+        modules(module {
+            single {
+                val connectionString = Utils.DATABASE_URL
+                val codecRegistry: CodecRegistry = CodecRegistries.fromRegistries(
+                    CodecRegistries.fromProviders(PojoCodecProvider.builder().automatic(true).build()),
+                    MongoClientSettings.getDefaultCodecRegistry()
+                )
+                val settings = MongoClientSettings.builder()
+                    .applyConnectionString(ConnectionString(connectionString))
+                    .codecRegistry(codecRegistry)
+                    .build()
+                KMongo.createClient(settings).getDatabase(Utils.DATABASE_NAME)
+            }
+            single { get<com.mongodb.client.MongoDatabase>().getCollection<User>() }
 
-            }, module {
-                single<UserRepository> { UserRepositoryImpl(get()) }
-            })
-        }
+        }, module {
+            single<UserRepository> { UserRepositoryImpl(get()) }
+        })
     }
 }
