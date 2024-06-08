@@ -54,8 +54,8 @@ dependencies {
     /** Authentication **/
     implementation("io.ktor:ktor-server-auth-jvm:$ktor_version")
     implementation("io.ktor:ktor-server-auth:$ktor_version")
-    implementation("io.ktor:ktor-auth:2.3.0")
-    implementation("io.ktor:ktor-auth-jwt:2.3.0")
+    implementation("io.ktor:ktor-auth:1.6.8")
+    implementation("io.ktor:ktor-auth-jwt:1.6.8")
 
     /** Koin **/
     implementation("io.insert-koin:koin-core:$koin_version")
