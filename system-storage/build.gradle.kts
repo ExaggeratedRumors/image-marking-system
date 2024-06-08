@@ -3,6 +3,9 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 val ktor_version: String by project
 val kotlin_version: String by project
 val logback_version: String by project
+val koin_version: String by project
+val koin_ksp_version: String by project
+val hoplite_version:String by project
 
 plugins {
     kotlin("jvm") version "1.9.23"
@@ -12,7 +15,7 @@ plugins {
 }
 
 group = "com.ertools"
-version = "0.0.1"
+version = "0.1.0"
 
 application {
     mainClass.set("com.ertools.ApplicationKt")
@@ -27,38 +30,45 @@ repositories {
 
 dependencies {
     /** Core **/
-    implementation("io.ktor:ktor-server-core-jvm")
+    implementation("io.ktor:ktor-server-core:$ktor_version")
+    implementation("io.ktor:ktor-server-swagger-jvm")
     implementation("io.ktor:ktor-server-content-negotiation-jvm")
-    implementation("io.ktor:ktor-server-netty-jvm")
+    implementation("io.ktor:ktor-server-netty:$ktor_version")
     implementation("io.ktor:ktor-server-call-logging-jvm:$ktor_version")
     implementation("io.ktor:ktor-server-content-negotiation-jvm:$ktor_version")
     implementation("io.ktor:ktor-server-html-builder:$ktor_version")
     implementation("io.ktor:ktor-client-cio:$ktor_version")
+    implementation("io.ktor:ktor-server-sessions:2.3.0")
 
     /** Serialization **/
     implementation("io.ktor:ktor-serialization-kotlinx-json-jvm:$ktor_version")
     implementation("io.ktor:ktor-server-compression-jvm:$ktor_version")
     implementation("io.ktor:ktor-serialization-jackson:2.3.1")
+    implementation("io.ktor:ktor-serialization-gson-jvm")
+    implementation("io.ktor:ktor-server-tomcat-jvm")
 
     /** Database **/
     implementation("org.mongodb:mongodb-driver-kotlin-coroutine:4.10.1")
+    implementation("org.litote.kmongo:kmongo:4.6.0")
 
     /** Authentication **/
     implementation("io.ktor:ktor-server-auth-jvm:$ktor_version")
+    implementation("io.ktor:ktor-server-auth:$ktor_version")
+    implementation("io.ktor:ktor-auth:2.3.0")
+    implementation("io.ktor:ktor-auth-jwt:2.3.0")
 
     /** Koin **/
-    val koinVersion = "3.3.2"
-    implementation("io.insert-koin:koin-core:$koinVersion")
-    testImplementation("io.insert-koin:koin-test:$koinVersion")
-    testImplementation("io.insert-koin:koin-test-junit5:$koinVersion")
-    val koinKspVersion = "1.1.0"
-    implementation("io.insert-koin:koin-annotations:$koinKspVersion")
-    ksp("io.insert-koin:koin-ksp-compiler:$koinKspVersion")
+    implementation("io.insert-koin:koin-core:$koin_version")
+    implementation("io.insert-koin:koin-ktor:$koin_version")
+    implementation("io.insert-koin:koin-logger-slf4j:$koin_version")
+    testImplementation("io.insert-koin:koin-test:$koin_version")
+    testImplementation("io.insert-koin:koin-test-junit5:$koin_version")
+    implementation("io.insert-koin:koin-annotations:$koin_ksp_version")
+    ksp("io.insert-koin:koin-ksp-compiler:$koin_ksp_version")
 
     /** Hoplite **/
-    val hopliteVersion = "2.6.5"
-    implementation("com.sksamuel.hoplite:hoplite-core:$hopliteVersion")
-    implementation("com.sksamuel.hoplite:hoplite-yaml:$hopliteVersion")
+    implementation("com.sksamuel.hoplite:hoplite-core:$hoplite_version")
+    implementation("com.sksamuel.hoplite:hoplite-yaml:$hoplite_version")
     implementation("io.github.smiley4:ktor-swagger-ui:2.2.0") {
         exclude(group = "org.slf4j", module = "slf4j-api")
         exclude(group = "org.yaml", module = "snakeyaml")
