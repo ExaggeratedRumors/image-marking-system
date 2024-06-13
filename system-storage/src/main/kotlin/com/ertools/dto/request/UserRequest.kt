@@ -1,5 +1,6 @@
-package com.ertools.domain
+package com.ertools.dto.request
 
+import com.ertools.dto.entity.User
 import org.bson.types.ObjectId
 
 data class UserRequest(

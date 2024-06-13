@@ -1,11 +1,9 @@
 package com.ertools.routes
 
-import com.ertools.commons.Utils
 import com.ertools.domain.UserRepository
-import com.ertools.domain.UserRequest
+import com.ertools.dto.request.UserRequest
 import io.ktor.http.*
 import io.ktor.server.application.*
-import io.ktor.server.auth.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
@@ -13,14 +11,19 @@ import org.bson.types.ObjectId
 import org.koin.ktor.ext.inject
 
 fun Route.userRoutes() {
-    val repository: UserRepository by inject<UserRepository>()
+    val repository by inject<UserRepository>()
 
     route("/user") {
-        post {
-            val user = call.receive<UserRequest>()
-            val insertedId = repository.insertOne(user.toDataObject())
-            call.respond(HttpStatusCode.Created, "Created user with id $insertedId")
+        try{
+            post {
+                val user = call.receive<UserRequest>()
+                val insertedId = repository.insertOne(user.toDataObject())
+                call.respond(HttpStatusCode.Created, "Created user with id $insertedId")
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
+
 
         delete("/{id?}") {
             val id = call.parameters["id"] ?: return@delete call.respondText(
@@ -29,9 +32,9 @@ fun Route.userRoutes() {
             )
             val delete: Long = repository.deleteById(ObjectId(id))
             if (delete == 1L) {
-                return@delete call.respondText("Fitness Deleted successfully", status = HttpStatusCode.OK)
+                return@delete call.respondText("User Deleted successfully", status = HttpStatusCode.OK)
             }
-            return@delete call.respondText("Fitness not found", status = HttpStatusCode.NotFound)
+            return@delete call.respondText("User not found", status = HttpStatusCode.NotFound)
         }
 
         get("/{id?}") {
@@ -59,7 +62,7 @@ fun Route.userRoutes() {
             )
         }
 
-        authenticate(Utils.AUTHENTICATION_USER) {
+        /*authenticate(Utils.AUTHENTICATION_USER) {
             get("/me") {
                 val principal = call.principal<UserIdPrincipal>()
                 val user = principal?.let { repository.findByLogin(it.name) }
@@ -69,6 +72,6 @@ fun Route.userRoutes() {
                     call.respond(HttpStatusCode.Unauthorized, "User not found")
                 }
             }
-        }
+        }*/
     }
 }

@@ -1,5 +1,6 @@
 package com.ertools.domain
 
+import com.ertools.dto.entity.User
 import org.bson.BsonValue
 import org.bson.types.ObjectId
 

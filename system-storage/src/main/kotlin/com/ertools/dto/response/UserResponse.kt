@@ -1,4 +1,4 @@
-package com.ertools.domain
+package com.ertools.dto.response
 
 data class UserResponse (
     val id: String,

@@ -1,7 +1,7 @@
 package com.ertools.infrastructure
 
 import com.ertools.commons.Utils
-import com.ertools.domain.User
+import com.ertools.dto.entity.User
 import com.ertools.domain.UserRepository
 import com.mongodb.MongoException
 import com.mongodb.client.model.Filters
