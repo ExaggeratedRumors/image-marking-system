@@ -6,8 +6,7 @@ import org.bson.types.ObjectId
 
 interface UserRepository {
     suspend fun insertOne(user: User): BsonValue?
-    suspend fun deleteById(objectId: ObjectId): Long
-    suspend fun findById(objectId: ObjectId): User?
+    suspend fun deleteByLogin(login: String): Long
     suspend fun findByLogin(login: String): User?
-    suspend fun updateOne(objectId: ObjectId, user: User): Long
+    suspend fun updateOne(login: String, user: User): Long
 }

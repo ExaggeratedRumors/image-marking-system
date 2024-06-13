@@ -1,8 +1,8 @@
 package com.ertools.infrastructure
 
 import com.ertools.commons.Utils
-import com.ertools.dto.entity.User
 import com.ertools.domain.UserRepository
+import com.ertools.dto.entity.User
 import com.mongodb.MongoException
 import com.mongodb.client.model.Filters
 import com.mongodb.client.model.UpdateOptions
@@ -10,13 +10,22 @@ import com.mongodb.client.model.Updates
 import com.mongodb.kotlin.client.coroutine.MongoDatabase
 import kotlinx.coroutines.flow.firstOrNull
 import org.bson.BsonValue
-import org.bson.types.ObjectId
 
 class UserRepositoryImpl(
     private val mongoDatabase: MongoDatabase
 ) : UserRepository {
+
     override suspend fun insertOne(user: User): BsonValue? {
         try {
+            if(mongoDatabase
+                    .getCollection<User>(Utils.DATABASE_USER_COLLECTION)
+                    .withDocumentClass<User>()
+                    .find(Filters.eq("login", user.login))
+                    .firstOrNull() != null
+                ) {
+                System.err.println("Login is already registered")
+                return null
+            }
             val result = mongoDatabase
                 .getCollection<User>(Utils.DATABASE_USER_COLLECTION)
                 .insertOne(user)
@@ -27,11 +36,11 @@ class UserRepositoryImpl(
         }
     }
 
-    override suspend fun deleteById(objectId: ObjectId): Long {
+    override suspend fun deleteByLogin(login: String): Long {
         try {
             val result = mongoDatabase
                 .getCollection<User>(Utils.DATABASE_USER_COLLECTION)
-                .deleteOne(Filters.eq("_id", objectId))
+                .deleteOne(Filters.eq("login", login))
             return result.deletedCount
         } catch (e: MongoException) {
             System.err.println("Unable to delete due to an error: $e")
@@ -39,23 +48,16 @@ class UserRepositoryImpl(
         }
     }
 
-    override suspend fun findById(objectId: ObjectId): User? =
-        mongoDatabase
-            .getCollection<User>(Utils.DATABASE_USER_COLLECTION)
-            .withDocumentClass<User>()
-            .find(Filters.eq("_id", objectId))
-            .firstOrNull()
-
     override suspend fun findByLogin(login: String): User? =
         mongoDatabase
             .getCollection<User>(Utils.DATABASE_USER_COLLECTION)
             .withDocumentClass<User>()
-            .find(Filters.eq("_login", login))
+            .find(Filters.eq("login", login))
             .firstOrNull()
 
-    override suspend fun updateOne(objectId: ObjectId, user: User): Long {
+    override suspend fun updateOne(login: String, user: User): Long {
         try {
-            val query = Filters.eq("_id", objectId)
+            val query = Filters.eq("login", login)
             val updates = Updates.combine(
                 Updates.set(User::name.name, user.name),
                 Updates.set(User::login.name, user.login),

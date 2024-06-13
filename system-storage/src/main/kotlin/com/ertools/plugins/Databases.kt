@@ -30,8 +30,6 @@ fun Application.configureDatabases() {
 
         modules(module {
             single {
-                println("TEST-PORT: ${environment.config.propertyOrNull("ktor.deployment.port")?.getString()}")
-                println("TEST-URI: ${environment.config.propertyOrNull("ktor.mongo.uri")?.getString()}")
                 MongoClient.create(
                 environment.config.propertyOrNull("ktor.mongo.uri")?.getString() ?: throw RuntimeException("Failed to access MongoDB URI.")
             ) }
