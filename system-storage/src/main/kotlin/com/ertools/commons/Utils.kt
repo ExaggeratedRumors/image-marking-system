@@ -2,9 +2,10 @@ package com.ertools.commons
 
 object Utils {
     /** Database **/
-    const val DATABASE_URL = "mongodb://user:test@localhost:27018"
-    const val DATABASE_NAME = "image-marker-database"
+    const val DATABASE_URL_PATH = "ktor.mongo.uri"
+    const val DATABASE_NAME_PATH = "ktor.mongo.database"
     const val DATABASE_USER_COLLECTION = "user"
+    const val DATABASE_IMAGE_COLLECTION = "image"
 
     /** Swagger **/
     const val SWAGGER_VERSION = "4.15.5"

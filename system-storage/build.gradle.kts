@@ -44,21 +44,14 @@ dependencies {
     implementation("io.ktor:ktor-server-swagger-jvm")
 
     /** Serialization **/
-    /*implementation("io.ktor:ktor-serialization-kotlinx-json-jvm:$ktor_version")
-    implementation("io.ktor:ktor-server-compression-jvm:$ktor_version")
-    implementation("io.ktor:ktor-serialization-jackson:2.3.1")*/
-    implementation("io.ktor:ktor-server-content-negotiation-jvm")
+    implementation("io.ktor:ktor-server-content-negotiation-jvm:$ktor_version")
+    implementation("io.ktor:ktor-serialization-kotlinx-json-jvm:$ktor_version")
+    implementation("io.ktor:ktor-server-default-headers-jvm:$ktor_version")
     implementation("io.ktor:ktor-serialization-gson-jvm")
     implementation("io.ktor:ktor-server-tomcat-jvm")
 
     /** Database **/
     implementation("org.mongodb:mongodb-driver-kotlin-coroutine:4.10.1")
-    /*implementation("org.litote.kmongo:kmongo-coroutine-core:$kmongo_version")
-    implementation("org.litote.kmongo:kmongo-coroutine-serialization:$kmongo_version")
-    implementation("org.litote.kmongo:kmongo-id:$kmongo_version")
-    implementation("org.litote.kmongo:kmongo-core:$kmongo_version")
-    implementation("org.litote.kmongo:kmongo-async:$kmongo_version")
-    implementation("org.litote.kmongo:kmongo:$kmongo_version")*/
 
     /** Authentication **/
     implementation("io.ktor:ktor-server-auth-jvm:$ktor_version")
