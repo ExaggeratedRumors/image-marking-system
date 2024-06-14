@@ -10,6 +10,7 @@ import com.mongodb.client.model.UpdateOptions
 import com.mongodb.client.model.Updates
 import com.mongodb.kotlin.client.coroutine.MongoDatabase
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.toList
 import org.bson.BsonValue
 
 class ImageRepositoryImpl(
@@ -48,9 +49,12 @@ class ImageRepositoryImpl(
         }
     }
 
-    override suspend fun selectAll(): List<Image> {
-        TODO("Not yet implemented")
-    }
+    override suspend fun selectAll(): List<Image> =
+        mongoDatabase
+            .getCollection<Image>(Utils.DATABASE_IMAGE_COLLECTION)
+            .withDocumentClass<Image>()
+            .find()
+            .toList()
 
     override suspend fun findByName(name: String): Image? {
         val data = mongoDatabase
@@ -62,8 +66,6 @@ class ImageRepositoryImpl(
         updateByName(data.name, data.copy(fetchAmount = data.fetchAmount + 1))
         return data
     }
-
-
 
     override suspend fun updateByName(name: String, image: Image): Long {
         try {

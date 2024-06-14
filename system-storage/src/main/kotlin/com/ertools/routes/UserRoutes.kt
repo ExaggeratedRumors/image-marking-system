@@ -7,7 +7,6 @@ import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import org.bson.types.ObjectId
 import org.koin.ktor.ext.inject
 
 fun Route.userRoutes() {
@@ -17,7 +16,10 @@ fun Route.userRoutes() {
         post {
             val user = call.receive<UserRequest>()
             val insertedId = repository.insertOne(user.toDataObject())
-                ?: return@post call.respondText("User already registered", status = HttpStatusCode.Forbidden)
+                ?: return@post call.respondText(
+                    "User already registered",
+                    status = HttpStatusCode.Forbidden
+                )
             call.respond(HttpStatusCode.Created, "Created user with id $insertedId")
         }
 

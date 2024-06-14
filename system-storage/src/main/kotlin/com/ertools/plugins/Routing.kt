@@ -2,6 +2,7 @@ package com.ertools.plugins
 
 import com.ertools.commons.Utils
 import com.ertools.routes.authRoutes
+import com.ertools.routes.imageRoutes
 import com.ertools.routes.userRoutes
 import io.ktor.server.application.*
 import io.ktor.server.plugins.swagger.*
@@ -16,6 +17,7 @@ fun Application.configureRouting() {
         }
         authenticate(Utils.JWT_NAME) {
             userRoutes()
+            imageRoutes()
         }
     }
 }
