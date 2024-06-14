@@ -20,5 +20,5 @@ object Utils {
     const val JWT_SECRET = "secret"
     const val JWT_USER = "system-storage-user"
     const val JWT_PASSWORD = "system-storage-password"
-
+    const val JWT_EXPIRATION_TIME = 3_600_000
 }

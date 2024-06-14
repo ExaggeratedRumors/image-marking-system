@@ -104,6 +104,82 @@ paths:
         '404':
           description: User not found
 
+  /image:
+    post:
+      summary: Create a new image record
+      security:
+        - bearerAuth: [ ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ImageRequest'
+      responses:
+        '201':
+          description: Image created successfully
+        '400':
+          description: Bad request
+  /image/{name}:
+    get:
+      summary: Retrieve image record by name
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - name: name
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              example: { }
+        '404':
+          description: Image not found
+    delete:
+      summary: Delete image record by name
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - name: name
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Image deleted successfully
+        '400':
+          description: Bad request
+        '404':
+          description: Image not found
+    patch:
+      summary: Update image record by name
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - name: name
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ImageRequest'
+      responses:
+        '200':
+          description: Image updated successfully
+        '400':
+          description: Bad request
+        '404':
+          description: Image not found
+
 components:
   securitySchemes:
     bearerAuth:
@@ -147,13 +223,47 @@ components:
         - login
         - password
         - code
+    Image:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        data:
+          type: string
+          format: byte
+        date:
+          type: integer
+          format: int64
+        fetchAmount:
+          type: integer
+      required:
+        - name
+        - login
+        - password
+        - code
+    ImageRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        data:
+          type: string
+          format: byte
+      required:
+        - name
+        - data
     Credentials:
       type: object
       properties:
         username:
           type: string
+          default: "system-storage-user"
         password:
           type: string
+          default: "system-storage-password"
       required:
         - username
         - password

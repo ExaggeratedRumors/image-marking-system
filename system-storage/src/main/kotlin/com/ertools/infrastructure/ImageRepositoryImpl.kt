@@ -56,16 +56,11 @@ class ImageRepositoryImpl(
             .find()
             .toList()
 
-    override suspend fun findByName(name: String): Image? {
-        val data = mongoDatabase
+    override suspend fun findByName(name: String): Image? = mongoDatabase
             .getCollection<Image>(Utils.DATABASE_IMAGE_COLLECTION)
             .withDocumentClass<Image>()
             .find(Filters.eq("name", name))
             .firstOrNull()
-        if(data == null) return null
-        updateByName(data.name, data.copy(fetchAmount = data.fetchAmount + 1))
-        return data
-    }
 
     override suspend fun updateByName(name: String, image: Image): Long {
         try {
@@ -78,9 +73,8 @@ class ImageRepositoryImpl(
             )
             val options = UpdateOptions().upsert(true)
             val result =
-                mongoDatabase.getCollection<User>(Utils.DATABASE_USER_COLLECTION)
+                mongoDatabase.getCollection<User>(Utils.DATABASE_IMAGE_COLLECTION)
                     .updateOne(query, updates, options)
-
             return result.modifiedCount
         } catch (e: MongoException) {
             System.err.println("Unable to update due to an error: $e")

@@ -36,17 +36,17 @@ fun Route.imageRoutes() {
             )
         }
 
-        get {
-            call.respond(repository.selectAll())
-        }
-
         get("/{name?}") {
             val name = call.parameters["name"]
             if(name.isNullOrEmpty()) return@get call.respondText(
                 text = "Missing name",
                 status = HttpStatusCode.BadRequest
             )
-            repository.findByName(name)?.let {
+            val image = repository.findByName(name)
+            image?.let {
+                val testImage = image.copy(fetchAmount = image.fetchAmount + 1)
+                println("TEST IMAGE: $testImage")
+                repository.updateByName(name, image.copy(fetchAmount = image.fetchAmount + 1))
                 call.respond(it.toResponse())
             } ?: call.respondText(
                 text = "No records found for name $name",

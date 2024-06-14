@@ -3,6 +3,7 @@ package com.ertools.routes
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
 import com.ertools.commons.Utils
+import com.ertools.dto.entity.Credentials
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.request.*
@@ -18,7 +19,7 @@ fun Route.authRoutes() {
                 .withAudience(Utils.JWT_AUDIENCE)
                 .withIssuer(Utils.JWT_ISSUER)
                 .withClaim("username", credentials.username)
-                .withExpiresAt(Date(System.currentTimeMillis() + 60000))
+                .withExpiresAt(Date(System.currentTimeMillis() + Utils.JWT_EXPIRATION_TIME))
                 .sign(Algorithm.HMAC256(Utils.JWT_SECRET))
             call.respond(mapOf("token" to token))
         } else {
@@ -26,5 +27,3 @@ fun Route.authRoutes() {
         }
     }
 }
-
-data class Credentials(val username: String, val password: String)
