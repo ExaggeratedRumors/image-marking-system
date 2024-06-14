@@ -3,12 +3,36 @@ info:
   title: system-storage private API
   version: 1.0.0
   description: |
-    This Swagger documentation file outlines the API specifications for a User Tracker application built with Ktor and MongoDB. The API allows users to manage user records including creating new records, updating and deleting records by ID. The API uses the User data classes to structure the user-related information.
+    This Swagger documentation file outlines the API specifications for a User Tracker application built with Ktor and MongoDB. The API allows users to manage user records including creating new records, updating and deleting records by login. The API uses the User data classes to structure the user-related information. This API is secured using JWT.
 
 paths:
+  /login:
+    post:
+      summary: Authenticate user and generate JWT
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Credentials'
+      responses:
+        '200':
+          description: Token generated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+        '401':
+          description: Invalid credentials
+
   /user:
     post:
       summary: Create a new user record
+      security:
+        - bearerAuth: [ ]
       requestBody:
         required: true
         content:
@@ -23,6 +47,8 @@ paths:
   /user/{login}:
     get:
       summary: Retrieve user record by login
+      security:
+        - bearerAuth: [ ]
       parameters:
         - name: login
           in: path
@@ -39,6 +65,8 @@ paths:
           description: User not found
     delete:
       summary: Delete user record by login
+      security:
+        - bearerAuth: [ ]
       parameters:
         - name: login
           in: path
@@ -54,6 +82,8 @@ paths:
           description: User not found
     patch:
       summary: Update user record by login
+      security:
+        - bearerAuth: [ ]
       parameters:
         - name: login
           in: path
@@ -75,6 +105,11 @@ paths:
           description: User not found
 
 components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
   schemas:
     User:
       type: object
@@ -112,3 +147,13 @@ components:
         - login
         - password
         - code
+    Credentials:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+      required:
+        - username
+        - password

@@ -1,17 +1,13 @@
-OPTIONS http://127.0.0.1:8082/user
-Accept: application/json
-
-###
 POST http://127.0.0.1:8082/user
 Content-Type: application/json
 
 {
-  "name": "Dominik",
-  "login": "test1",
-  "password": "test1",
-  "code": "ytest1"
+  "name": "UserName",
+  "login": "UserLogin",
+  "password": "UserPassword",
+  "code": "UserCode"
 }
 
 ###
-GET http://127.0.0.1:8082/user/1
+GET http://127.0.0.1:8082/user/endriu123
 Accept: application/json

@@ -3,7 +3,7 @@ package com.ertools.commons
 object Utils {
     /** Database **/
     const val DATABASE_URL = "mongodb://user:test@localhost:27018"
-    const val DATABASE_NAME = "image-marker"
+    const val DATABASE_NAME = "image-marker-database"
     const val DATABASE_USER_COLLECTION = "user"
 
     /** Swagger **/
@@ -12,5 +12,12 @@ object Utils {
     const val SWAGGER_PATH = "swagger-ui"
 
     /** Security **/
-    const val AUTHENTICATION_USER = "auth-user"
+    const val JWT_NAME = "auth_jwt"
+    const val JWT_ISSUER = "http://0.0.0.0:8082/"
+    const val JWT_AUDIENCE = "http://0.0.0.0:8082/storage-audience"
+    const val JWT_REALM = "system_storage"
+    const val JWT_SECRET = "secret"
+    const val JWT_USER = "system-storage-user"
+    const val JWT_PASSWORD = "system-storage-password"
+
 }

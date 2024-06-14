@@ -61,10 +61,9 @@ dependencies {
     implementation("org.litote.kmongo:kmongo:$kmongo_version")*/
 
     /** Authentication **/
-    //implementation("io.ktor:ktor-server-auth-jvm:$ktor_version")
-    //implementation("io.ktor:ktor-server-auth:$ktor_version")
-    //implementation("io.ktor:ktor-auth:1.6.8")
-    //implementation("io.ktor:ktor-auth-jwt:1.6.8")
+    implementation("io.ktor:ktor-server-auth-jvm:$ktor_version")
+    implementation("io.ktor:ktor-server-auth:$ktor_version")
+    implementation("io.ktor:ktor-server-auth-jwt-jvm:$ktor_version")
 
     /** Koin **/
     //implementation("io.insert-koin:koin-core:$koin_version")

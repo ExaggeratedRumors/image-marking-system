@@ -1,20 +1,17 @@
 package com.ertools
 
-import com.ertools.dto.entity.User
-import com.ertools.plugins.*
-import com.mongodb.client.model.Filters
+import com.ertools.plugins.configureDatabases
+import com.ertools.plugins.configureRouting
+import com.ertools.plugins.configureSecurity
+import com.ertools.plugins.configureSerialization
 import io.ktor.server.application.*
-import io.ktor.server.engine.*
 import io.ktor.server.netty.*
-import io.ktor.server.response.*
-import io.ktor.server.routing.*
-import org.bson.types.ObjectId
 
 fun main(args: Array<String>): Unit = EngineMain.main(args)
 
 fun Application.module() {
     configureDatabases()
     configureSerialization()
-    //configureSecurity()
+    configureSecurity()
     configureRouting()
 }
