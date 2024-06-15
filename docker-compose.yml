@@ -21,11 +21,16 @@ services:
         container_name: image-marker
         ports:
             - 8081:8081
+        networks:
+            - global
+            
     system-storage:
         image: system-storage-img
         container_name: system-storage
         ports:
             - 8082:8082
+        networks:
+            - global
 volumes:
     mongo.data:
 

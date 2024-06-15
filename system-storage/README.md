@@ -26,7 +26,7 @@ version 1.03
 
 1. Create, run and connect with MongoDB database:
 ```yaml
-Port: 27018
+Port: 27017
 User: user
 Password: test
 Database: image-marker-database
@@ -44,7 +44,7 @@ ktor {
     modules = [ com.ertools.ApplicationKt.module ]
   }
   mongo {
-    uri = "mongodb://user:test@localhost:27018/"
+    uri = "mongodb://user:test@localhost:27017/"
     database = "image-marker"
   }
 }
