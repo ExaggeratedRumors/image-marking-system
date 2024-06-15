@@ -37,8 +37,6 @@ dependencies {
     implementation("io.ktor:ktor-server-netty:$ktor_version")
     implementation("io.ktor:ktor-server-content-negotiation-jvm:$ktor_version")
     implementation("io.ktor:ktor-server-html-builder:$ktor_version")
-    //implementation("io.ktor:ktor-client-cio:$ktor_version")
-    //implementation("io.ktor:ktor-server-sessions:2.3.0")
 
     /* Documentation */
     implementation("io.ktor:ktor-server-swagger-jvm")
@@ -59,27 +57,13 @@ dependencies {
     implementation("io.ktor:ktor-server-auth-jwt-jvm:$ktor_version")
 
     /** Koin **/
-    //implementation("io.insert-koin:koin-core:$koin_version")
     implementation("io.insert-koin:koin-ktor:$koin_version")
     implementation("io.insert-koin:koin-logger-slf4j:$koin_version")
-    /*testImplementation("io.insert-koin:koin-test:$koin_version")
-    testImplementation("io.insert-koin:koin-test-junit5:$koin_version")
-    implementation("io.insert-koin:koin-annotations:$koin_ksp_version")
-    ksp("io.insert-koin:koin-ksp-compiler:$koin_ksp_version")*/
-
-    /** Hoplite **/
-    //implementation("com.sksamuel.hoplite:hoplite-core:$hoplite_version")
-    //implementation("com.sksamuel.hoplite:hoplite-yaml:$hoplite_version")
-    /*implementation("io.github.smiley4:ktor-swagger-ui:2.2.0") {
-        exclude(group = "org.slf4j", module = "slf4j-api")
-        exclude(group = "org.yaml", module = "snakeyaml")
-    }*/
 
     /** Tests **/
     implementation("ch.qos.logback:logback-classic:$logback_version")
-    /*testImplementation("io.ktor:ktor-server-tests-jvm")
+    testImplementation("io.ktor:ktor-server-tests-jvm")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
-    testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0")*/
 }
 
 sourceSets {
@@ -110,7 +94,7 @@ tasks {
 
 ktor {
     docker {
-        localImageName.set("system-storage-image")
+        localImageName.set("system-storage-img")
         imageTag.set("alpha")
     }
 }

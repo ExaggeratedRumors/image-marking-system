@@ -24,19 +24,21 @@ repositories {
 }
 
 dependencies {
+    /** Core **/
     implementation("io.ktor:ktor-server-core-jvm")
-    implementation("io.ktor:ktor-server-auth-jvm")
     implementation("io.ktor:ktor-server-netty-jvm")
-    implementation("ch.qos.logback:logback-classic:$logback_version")
+    implementation("io.ktor:ktor-client-cio:2.3.0")
+    implementation("io.ktor:ktor-client-core:2.3.0")
+
+    /** Serialization **/
     implementation("io.ktor:ktor-server-content-negotiation-jvm:$ktor_version")
-    implementation("io.ktor:ktor-serialization-kotlinx-json-jvm:$ktor_version")
     implementation("io.ktor:ktor-serialization-gson-jvm:2.0.3")
-    implementation("io.ktor:ktor-server-default-headers-jvm:2.0.3")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-    implementation("com.fasterxml.jackson.core:jackson-databind")
-    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.14.2")
-    implementation("com.google.guava:guava:33.0.0-jre")
     implementation("com.typesafe:config:1.4.1")
+
+    /** Logging **/
+    implementation("ch.qos.logback:logback-classic:$logback_version")
+
+    /** Test **/
     testImplementation("io.ktor:ktor-server-tests-jvm")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
 }
@@ -54,7 +56,7 @@ tasks {
 
 ktor {
     docker {
-        localImageName.set("user-register-image")
+        localImageName.set("user-register-img")
         imageTag.set("alpha")
     }
 }

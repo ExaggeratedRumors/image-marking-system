@@ -1,0 +1,19 @@
+### New user
+POST http://127.0.0.1:8083/register
+Content-Type: application/json
+
+{
+  "name": "tes1",
+  "login": "login1",
+  "password": "password1"
+}
+
+### User already exists
+POST http://127.0.0.1:8083/register
+Content-Type: application/json
+
+{
+  "name": "tes1",
+  "login": "login1",
+  "password": "password1"
+}

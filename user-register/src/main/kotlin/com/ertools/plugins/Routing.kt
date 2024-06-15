@@ -1,13 +1,13 @@
 package com.ertools.plugins
 
+import com.ertools.routes.registerRoutes
+import com.ertools.routes.rootRoutes
 import io.ktor.server.application.*
-import io.ktor.server.response.*
 import io.ktor.server.routing.*
 
 fun Application.configureRouting() {
     routing {
-        get("/") {
-            call.respondText("Hello World!")
-        }
+        rootRoutes()
+        registerRoutes()
     }
 }

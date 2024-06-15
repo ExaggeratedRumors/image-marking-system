@@ -1,6 +1,9 @@
 package com.ertools.commons
 
 object Utils {
+    /** Version **/
+    const val VERSION = 1.03
+
     /** Database **/
     const val DATABASE_URL_PATH = "ktor.mongo.uri"
     const val DATABASE_NAME_PATH = "ktor.mongo.database"

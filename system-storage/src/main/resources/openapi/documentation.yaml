@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   title: system-storage private API
-  version: 1.0.0
+  version: 1.0.3
   description: |
     This Swagger documentation file outlines the API specifications for a User Tracker application built with Ktor and MongoDB. The API allows users to manage user records including creating new records, updating and deleting records by login. The API uses the User data classes to structure the user-related information. This API is secured using JWT.
 
@@ -27,7 +27,17 @@ paths:
                     type: string
         '401':
           description: Invalid credentials
-
+  /:
+    get:
+      summary: Check server endpoint.
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              example: { }
+        '404':
+          description: User not found
   /user:
     post:
       summary: Create a new user record
