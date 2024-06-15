@@ -70,7 +70,7 @@ http://127.0.0.1:8082/swagger-ui
 ```
 7. Paste JWT in Authorize section to finalize authorization.
 
-## Endpoints
+## Private-API Endpoints
 
 ```http request
 GET http://localhost:8082/user/{login}
@@ -97,9 +97,14 @@ PATCH http://127.0.0.1:8082/user/{login}
 
 ## Docker
 
+Create fat jar:
+```bash
+./gradlew shadowJar
+```
+
 Create image:
 ```bash
-docker build -t system-storge-img .
+docker build -t system-storage-img .
 ```
 
 Create container:

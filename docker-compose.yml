@@ -3,7 +3,7 @@ version: '3'
 services:
     mongodb:
         image: mongo:latest
-        container_name: ${COMPOSE_PROJECT_NAME}.mongodb.docker
+        container_name: system-database
         restart: unless-stopped
         environment:
             MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME}
@@ -12,7 +12,7 @@ services:
         volumes:
             - mongo.data:/data/db
         ports:
-            - 127.0.0.1:${MONGO_PORT}:27017
+            - 127.0.0.1:${MONGO_PORT}:27018
         networks:
             - global
             
@@ -20,7 +20,10 @@ services:
         image: image-marker-img
         ports:
             - 8081:8081
-
+    system-storage:
+        image: system-storage-img
+        ports:
+            - 8082:8082
 volumes:
     mongo.data:
 
