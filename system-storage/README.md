@@ -49,6 +49,9 @@ ktor {
   }
 }
 ```
+If you want to containerize application, use instead:
+`mongodb://user:test@mongodb:27017/`
+
 
 3. Run application.
 4. Visit Swagger UI:

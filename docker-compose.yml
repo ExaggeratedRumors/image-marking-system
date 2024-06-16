@@ -31,6 +31,14 @@ services:
             - 8082:8082
         networks:
             - global
+    
+    user-register:
+        image: user-register-img
+        container_name: user-register
+        ports:
+            - 8083:8083
+        networks:
+            - global
 volumes:
     mongo.data:
 

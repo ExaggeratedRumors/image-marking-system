@@ -65,7 +65,7 @@ fun Route.registerRoutes() {
                 }
                 call.respond(
                     status = registerResponse.status,
-                    message = registerResponse.body()
+                    message = registerResponse.body<String>()
                 )
             }
         }

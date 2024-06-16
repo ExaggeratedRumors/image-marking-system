@@ -1,13 +1,13 @@
 # User Register
 
-![](https://shields.io/badge/Ktor-2.3.10-violet) ![](https://shields.io/badge/v0.1-purple)
+![](https://shields.io/badge/Ktor-2.3.10-violet) ![](https://shields.io/badge/v1.0-purple)
 
 Service for public API to register imager-marker users.
 
 ## Release
 
 `
-version 0.1
+version 1.0
 `
 
 ## Technologies
@@ -22,49 +22,43 @@ version 0.1
 
 ## Configuration
 
-3. Run application.
-4. Visit Swagger UI:
-```http request
-http://127.0.0.1:8083/swagger-ui
-```
-5. Authorize application by `/login` endpoint:
-```json
-{
-  "username": "system-storage-user",
-  "password": "system-storage-password"
+File `src/main/resources/application.conf`:
+
+```yaml
+ktor {
+    deployment {
+        port = 8083
+        port = ${?PORT}
+    }
+    application {
+        modules = [ com.ertools.ApplicationKt.module ]
+    }
+    system-storage {
+        user_url = "http://127.0.0.1:8082/user"
+        login_url = "http://127.0.0.1:8082/login"
+        jwt_login = "system-storage-user"
+        jwt_password = "system-storage-password"
+        jwt_expiring = 3000000
+    }
+    encryption {
+        key_length = 10
+        illegal_chars = """\&/^$\"'"""
+    }
 }
 ```
-6. Copy JWT from response body:
-```json
-{
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJodHRwOi8vMC4wLjAuMDo4MDgyL3N0b3JhZ2UtYXVkaWVuY2UiLCJpc3MiOiJodHRwOi8vMC4wLjAuMDo4MDgyLyIsInVzZXJuYW1lIjoic3lzdGVtLXN0b3JhZ2UtdXNlciIsImV4cCI6MTcxODMzOTU3N30.8A6nwCZtAQjWCRbVJpKxHZhNg_26EJqhcBuaOKwysxA"
-}
-```
-7. Paste JWT in Authorize section to finalize authorization.
 
 ## Private-API Endpoints
 
 ```http request
-GET http://localhost:8082/user/{login}
-Accept: application/json
-
-###
-POST http://127.0.0.1:8082/user
+### New user
+POST http://127.0.0.1:8083/register
 Content-Type: application/json
 
 {
-  "name": "UserName",
-  "login": "UserLogin",
-  "password": "UserPassword",
-  "code": "UserCode"
+  "name": "test1",
+  "login": "login1",
+  "password": "password1"
 }
-
-###
-DELETE http://127.0.0.1:8082/user/{login}
-
-###
-PATCH http://127.0.0.1:8082/user/{login}
-
 ```
 
 ## Docker
@@ -76,12 +70,12 @@ Create fat jar:
 
 Create image:
 ```bash
-docker build -t system-storage-img .
+docker build -t user-register-img .
 ```
 
 Create container:
 ```bash
-docker run -p 8082:8082 --name system-storage system-storage-img
+docker run -p 8082:8082 --name user-register user-register-img
 ```
 
 
