@@ -47,7 +47,7 @@ ktor {
 }
 ```
 
-## Private-API Endpoints
+## Public-API Endpoints
 
 ```http request
 ### New user
