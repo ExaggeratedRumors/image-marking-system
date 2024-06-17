@@ -26,10 +26,14 @@ repositories {
 
 dependencies {
     /** Core **/
-    implementation("io.ktor:ktor-server-core-jvm")
+    implementation("io.ktor:ktor-server-core-jvm:$ktor_version")
     implementation("io.ktor:ktor-server-netty-jvm")
     implementation("io.ktor:ktor-client-cio:$ktor_version")
     implementation("io.ktor:ktor-client-core:$ktor_version")
+
+    /** CORS **/
+    implementation("io.ktor:ktor-server-cors:$ktor_version")
+    implementation("io.ktor:ktor-server-default-headers-jvm:2.0.3")
 
     /** Serialization **/
     implementation("io.ktor:ktor-server-content-negotiation-jvm:$ktor_version")

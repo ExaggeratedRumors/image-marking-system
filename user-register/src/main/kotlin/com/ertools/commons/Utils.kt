@@ -15,4 +15,11 @@ object Utils {
 
     /** Encryption **/
     const val ENCRYPTION_ALGORITHM: String = "HmacSHA384"
+
+    /** Security **/
+    const val JWT_AUTHENTICATION_NAME = "auth-jwt"
+    const val JWT_AUTHENTICATION_REALM = "auth-realm"
+    const val JWT_AUTHENTICATION_SECRET = "auth-secret"
+    const val JWT_AUTHENTICATION_AUDIENCE = "auth-audience"
+    const val JWT_AUTHENTICATION_ISSUER = "auth-issuer"
 }
