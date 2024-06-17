@@ -11,7 +11,7 @@ System marking images by user code.
 ## Diagram
 
 <p align="center">
-    <img src="images/diagram.png" width="300" alt="diagram"/> 
+    <img src="images/diagram.png" width="400" alt="diagram"/> 
 </p>
 
 ## Build docker container
