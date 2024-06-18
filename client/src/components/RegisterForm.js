@@ -2,20 +2,35 @@ import React, { useState } from 'react';
 import axios from 'axios';
 
 function RegisterForm() {
-    const [username, setUsername] = useState('');
+    const [name, setUsername] = useState('');
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
 
+
     const handleSubmit = async (e) => {
+        e.preventDefault();
+        const response = await fetch("http://localhost:8083/register", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ name, login, password }),
+        });
+        if (response.ok) {
+            alert('Registration successful');
+        } else {
+            alert('Registration failed');
+        }
+    };
+
+/*    const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             const response =
-                await axios.post('http://localhost:8083/api/register', { login, username, password });
+                await axios.post('http://localhost:8083/register', { login, username, password });
             alert('Registration successful');
         } catch (error) {
             alert('Registration failed');
         }
-    };
+    };*/
 
     return (
         <form onSubmit={handleSubmit}>
@@ -23,7 +38,7 @@ function RegisterForm() {
             <input
                 type="text"
                 placeholder="Name"
-                value={username}
+                value={name}
                 onChange={(e) => setUsername(e.target.value)}
                 required
             />

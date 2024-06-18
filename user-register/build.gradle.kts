@@ -44,7 +44,6 @@ dependencies {
     /** Authentication **/
     implementation("io.ktor:ktor-client-auth:$ktor_version")
     implementation("io.ktor:ktor-client-auth-jvm:$ktor_version")
-    implementation("io.ktor:ktor-server-auth-jwt-jvm:$ktor_version")
 
     /** Logging **/
     implementation("ch.qos.logback:logback-classic:$logback_version")

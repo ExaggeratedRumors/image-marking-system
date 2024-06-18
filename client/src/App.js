@@ -1,7 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './components/Home';
-import LoginForm from './components/LoginForm';
 import RegisterForm from './components/RegisterForm';
 import ImageUpload from './components/ImageUpload';
 import ImageFetch from './components/ImageFetch';
@@ -13,7 +12,6 @@ function App() {
             <div className="App">
                 <Routes>
                     <Route path="/" element={<Home />} />
-                    <Route path="/login" element={<LoginForm />} />
                     <Route path="/register" element={<RegisterForm />} />
                     <Route path="/upload" element={<ImageUpload />} />
                     <Route path="/images" element={<ImageFetch />} />

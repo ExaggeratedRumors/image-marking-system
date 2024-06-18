@@ -20,52 +20,59 @@ fun Route.registerRoutes() {
 
     route("/register") {
         post {
-            HttpClient(CIO) {
-                install(ContentNegotiation) {
-                    gson()
-                }
-            }.use { client ->
-
-                /** Authentication **/
-                if(tokenData.timestamp + Utils.TOKEN_EXPIRING_TIME_MILLIS < System.currentTimeMillis()) {
-                    val loginRequest = Credentials(
-                        Utils.SYSTEM_STORAGE_LOGIN,
-                        Utils.SYSTEM_STORAGE_PASSWORD
-                    )
-                    val authResponse = client.post(Utils.SYSTEM_STORAGE_LOGIN_ENDPOINT) {
-                        contentType(ContentType.Application.Json)
-                        setBody(loginRequest)
+            try {
+                HttpClient(CIO) {
+                    install(ContentNegotiation) {
+                        gson()
                     }
-                    if(authResponse.status != HttpStatusCode.OK) {
-                        call.respond(
-                            status = authResponse.status,
-                            message = authResponse.body<String>()
+                }.use { client ->
+                    /** Authentication **/
+                    if (tokenData.timestamp + Utils.TOKEN_EXPIRING_TIME_MILLIS < System.currentTimeMillis()) {
+                        val loginRequest = Credentials(
+                            Utils.SYSTEM_STORAGE_LOGIN,
+                            Utils.SYSTEM_STORAGE_PASSWORD
                         )
-                        return@use
+                        val authResponse = client.post(Utils.SYSTEM_STORAGE_LOGIN_ENDPOINT) {
+                            contentType(ContentType.Application.Json)
+                            setBody(loginRequest)
+                        }
+                        if (authResponse.status != HttpStatusCode.OK) {
+                            call.respond(
+                                status = authResponse.status,
+                                message = authResponse.body<String>()
+                            )
+                            return@use
+                        }
+                        tokenData = TokenData(
+                            authResponse.body<LoginResponse>().token,
+                            System.currentTimeMillis()
+                        )
                     }
-                    tokenData = TokenData(
-                        authResponse.body<LoginResponse>().token,
-                        System.currentTimeMillis()
+
+                    /** Registration attempt **/
+                    val registerRequest = call.receive<RegisterRequest>()
+                    val userEntity = UserEntity(
+                        name = registerRequest.name,
+                        login = registerRequest.login,
+                        password = registerRequest.password,
+                        code = CodeGenerator().generateKey(Utils.KEY_LENGTH)
+                    )
+
+                    val registerResponse = client.post(Utils.SYSTEM_STORAGE_USER_ENDPOINT) {
+                        contentType(ContentType.Application.Json)
+                        header(HttpHeaders.Authorization, "Bearer ${tokenData.token}")
+                        setBody(userEntity)
+                    }
+                    call.respond(
+                        status = registerResponse.status,
+                        message = registerResponse.body<String>()
                     )
                 }
-
-                /** Registration attempt **/
-                val registerRequest = call.receive<RegisterRequest>()
-                val userEntity = UserEntity(
-                    name = registerRequest.name,
-                    login = registerRequest.login,
-                    password = registerRequest.password,
-                    code = CodeGenerator().generateKey(Utils.KEY_LENGTH)
-                )
-
-                val registerResponse = client.post(Utils.SYSTEM_STORAGE_USER_ENDPOINT) {
-                    contentType(ContentType.Application.Json)
-                    header(HttpHeaders.Authorization, "Bearer ${tokenData.token}")
-                    setBody(userEntity)
-                }
+            } catch (e: Exception) {
+                e.printStackTrace()
                 call.respond(
-                    status = registerResponse.status,
-                    message = registerResponse.body<String>()
+                    status = HttpStatusCode.Conflict,
+                    message = "Cannot connect to storage service."
                 )
             }
         }

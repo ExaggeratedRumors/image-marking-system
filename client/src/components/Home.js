@@ -8,7 +8,6 @@ function Home() {
             <h1>Welcome to the Image-Marker-System App</h1>
             <nav>
                 <ul>
-                    <li><Link to="/login">Login</Link></li>
                     <li><Link to="/register">Register</Link></li>
                     <li><Link to="/upload">Upload Image</Link></li>
                     <li><Link to="/images">Fetch Image</Link></li>
