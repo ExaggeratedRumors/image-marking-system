@@ -11,7 +11,7 @@ System marking images by user code.
 ## Diagram
 
 <p align="center">
-    <img src="images/diagram.png" width="400" alt="diagram"/> 
+    <img src="images/system_diagram.png" width="400" alt="diagram"/> 
 </p>
 
 ## Architecture
@@ -59,5 +59,5 @@ docker compose up
 
 
 <p align="center">
-    <img src="images/preview2.png" width="400" alt="preview2"/> 
+    <img src="images/preview_result.png" width="400" alt="preview2"/> 
 </p>
