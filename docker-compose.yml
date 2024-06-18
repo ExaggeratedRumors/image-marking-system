@@ -23,6 +23,15 @@ services:
             - 8081:8081
         networks:
             - global
+            - image-marking-network
+        volumes:
+            - image-data:/data
+        environment:
+            - SYSTEM_STORAGE_USER_ENDPOINT=http://system-storage:8082/user
+            - SYSTEM_STORAGE_LOGIN_ENDPOINT=http://system-storage:8082/login
+            - SYSTEM_STORAGE_IMAGE_ENDPOINT=http://system-storage:8082/image
+            - SYSTEM_STORAGE_LOGIN=${SYSTEM_STORAGE_LOGIN}
+            - SYSTEM_STORAGE_PASSWORD=${SYSTEM_STORAGE_PASSWORD}
             
     system-storage:
         image: system-storage-img
@@ -31,6 +40,10 @@ services:
             - 8082:8082
         networks:
             - global
+            - image-marking-network
+        environment:
+            - SYSTEM_STORAGE_LOGIN=${SYSTEM_STORAGE_LOGIN}
+            - SYSTEM_STORAGE_PASSWORD=${SYSTEM_STORAGE_PASSWORD}
     
     user-register:
         image: user-register-img
@@ -39,10 +52,27 @@ services:
             - 8083:8083
         networks:
             - global
+            - image-marking-network
+        environment:
+            - SYSTEM_STORAGE_USER_ENDPOINT=http://system-storage:8082/user
+            - SYSTEM_STORAGE_LOGIN_ENDPOINT=http://system-storage:8082/login
+            - SYSTEM_STORAGE_LOGIN=${SYSTEM_STORAGE_LOGIN}
+            - SYSTEM_STORAGE_PASSWORD=${SYSTEM_STORAGE_PASSWORD}
+     
+    system-client:
+        image: system-client-img
+        container_name: system-client
+        ports:
+            - 80:80
+        networks:
+            - global
+            - image-marking-network
 volumes:
     mongo.data:
+    image-data:
 
 networks:
+    image-marking-network:
     global:
         external: false
 

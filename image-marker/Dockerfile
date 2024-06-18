@@ -1,8 +1,12 @@
-FROM openjdk:17-jdk-alpine3.14
-# ustawić tutaj utf i utc
-ENV DB_URL jdbc:mysql://localhost:3306/mydatabase
-ENV DB_USER myuser
-ENV DB_PASSWORD mypassword
+FROM openjdk:20-jdk-slim
+
+RUN apt-get update && apt-get install -y \
+    libfreetype6 \
+    libfreetype6-dev \
+    fontconfig \
+    && rm -rf /var/lib/apt/lists/*
+
 RUN mkdir /app
 COPY ./build/libs/image-marker-all.jar /app/app.jar
+RUN mkdir -p /data/images
 ENTRYPOINT ["java","-jar","/app/app.jar"]

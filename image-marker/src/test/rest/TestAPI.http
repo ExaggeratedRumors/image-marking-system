@@ -1,0 +1,19 @@
+### Upload new image
+POST http://127.0.0.1:8081/upload
+Content-Type: application/json
+
+{
+  "name": "test1",
+  "login": "login1",
+  "password": "password1"
+}
+
+### Fetch image from database
+POST http://127.0.0.1:8081/fetch
+Content-Type: application/json
+
+{
+  "name": "test1",
+  "login": "login1",
+  "password": "password1"
+}

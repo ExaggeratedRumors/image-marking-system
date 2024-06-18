@@ -17,8 +17,4 @@ object Utils {
 
     /** Encryption **/
     const val ENCRYPTION_ALGORITHM: String = "HmacSHA384"
-
-    init {
-        println("USER ENDPOINT: $SYSTEM_STORAGE_USER_ENDPOINT")
-    }
 }

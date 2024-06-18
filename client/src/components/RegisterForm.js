@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 
 function RegisterForm() {
     const [name, setUsername] = useState('');
@@ -20,17 +19,6 @@ function RegisterForm() {
             alert('Registration failed');
         }
     };
-
-/*    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            const response =
-                await axios.post('http://localhost:8083/register', { login, username, password });
-            alert('Registration successful');
-        } catch (error) {
-            alert('Registration failed');
-        }
-    };*/
 
     return (
         <form onSubmit={handleSubmit}>
